@@ -9,10 +9,12 @@ data {
 parameters {
   real<lower=0> sigma;
   vector[N_pred] beta;
+  real<lower=2> nu;
 }
 model {
-  sigma ~ normal(0, 1); // prior on noise
-  y_train ~ normal(X_train * beta, sigma); // likelihood
+  sigma ~ normal(0, 1);
+  beta ~ normal(0, 1e6);
+  y_train ~ normal(X_train * beta, sigma);
 }
 generated quantities {
   array[N_test] real y_test;
